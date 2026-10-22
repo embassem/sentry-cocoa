@@ -1,0 +1,24 @@
+Sources/Swift/Helper/SentrySDK.swift
+  s_f26084ed2d1c02::t_c94eeedc69648c 333-350
+CHANGELOG.md
+  s_f26084ed2d1c02::t_56cfd4a36b84be 3-8
+Tests/SentryTests/SentrySDKTests.swift
+  s_f26084ed2d1c02::t_445b9d3ebcf755 630,632-649
+  s_f26084ed2d1c02::t_7b22d83128ee32 631
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "5a022349aadebc28673848b9c9d16c15bfb1bd1c",
+  "prompts": {},
+  "sessions": {
+    "s_f26084ed2d1c02": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "71cb7b8e-5bc8-4dce-a21d-d6ef7b7475ca",
+        "model": "claude-sonnet-5-5"
+      },
+      "human_author": "Bassem Tourky <bassem.tourky@deliveryhero.com>"
+    }
+  }
+}
