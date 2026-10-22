@@ -330,6 +330,24 @@ extension SentrySDK {
         return hub.captureError(error as NSError, with: hub.scope, attachAllThreads: NSNumber(value: attachAllThreads))
     }
 
+    /// Captures an error event and sends it to Sentry, with a per-call override for attaching all
+    /// threads with stack traces.
+    /// Maintains the global scope but mutates scope data for only this call.
+    /// - Parameters:
+    ///   - error: The error to send to Sentry.
+    ///   - attachAllThreads: Whether to attach all threads with full stack traces. Overrides `Options.attachAllThreads`.
+    ///   - block: The block mutating the scope only for this call.
+    /// - Returns: The `SentryId` of the event or `SentryId.empty` if the event is not sent.
+    #if !SDK_V10
+    @objc(captureError:attachAllThreads:withScopeBlock:)
+    #endif
+    @discardableResult public static func capture(error: Error, attachAllThreads: Bool, block: @escaping (Scope) -> Void) -> SentryId {
+        let hub = SentrySDKInternal.currentHub()
+        let scope = Scope(scope: hub.scope)
+        block(scope)
+        return hub.captureError(error as NSError, with: scope, attachAllThreads: NSNumber(value: attachAllThreads))
+    }
+
     /// Captures an error event and sends it to Sentry with a user-provided hint.
     /// The hint is passed to `beforeSend` callbacks, allowing inspection and modification.
     /// - parameter error: The error to send to Sentry.

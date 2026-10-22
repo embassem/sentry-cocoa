@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Features
+
+- Add `SentrySDK.capture(error:attachAllThreads:block:)` to capture an error with a per-call `attachAllThreads` override and a scope block that only mutates the scope for that call
+
 ## 9.31.0
 
 ### Features

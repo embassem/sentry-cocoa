@@ -629,6 +629,26 @@ class SentrySDKTests: XCTestCase {
         XCTAssertEqual(NSNumber(value: true), client.captureErrorWithScopeAttachAllThreadsInvocations.first?.attachAllThreads)
     }
 
+    func testCaptureError_withAttachAllThreadsAndScopeBlock_forwardsToClientWithModifiedScope() {
+        givenSdkWithHub()
+
+        SentrySDK.capture(error: fixture.error, attachAllThreads: true, block: fixture.scopeBlock)
+
+        let client = fixture.client
+        XCTAssertEqual(1, client.captureErrorWithScopeAttachAllThreadsInvocations.count)
+        XCTAssertEqual(NSNumber(value: true), client.captureErrorWithScopeAttachAllThreadsInvocations.first?.attachAllThreads)
+        XCTAssertEqual(fixture.scopeWithBlockApplied, client.captureErrorWithScopeAttachAllThreadsInvocations.first?.scope)
+    }
+
+    func testCaptureError_withAttachAllThreadsAndScopeBlock_CreatesNewScope() {
+        givenSdkWithHub()
+
+        SentrySDK.capture(error: fixture.error, attachAllThreads: false, block: fixture.scopeBlock)
+
+        assertHubScopeNotChanged()
+        XCTAssertEqual(NSNumber(value: false), fixture.client.captureErrorWithScopeAttachAllThreadsInvocations.first?.attachAllThreads)
+    }
+
     func testCaptureException_withAttachAllThreads_forwardsToClient() {
         givenSdkWithHub()
 
